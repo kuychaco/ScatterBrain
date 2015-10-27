@@ -1,4 +1,4 @@
-/* 
+/*
 * @Author: Katrina Uychaco
 * @Date:   2015-07-22 22:30:50
 * @Last Modified by:   Katrina Uychaco
@@ -26,6 +26,7 @@ th {
 
 body {
   padding-left: 20px;
+  font-family: 'Lato', sans-serif;
 }
 
 h4 {
@@ -34,4 +35,27 @@ h4 {
 
 p {
   padding-bottom: 10px;
+}
+
+body {
+  text-align: center;
+}
+
+input {
+  text-align: center;
+  border: none;
+}
+
+table {
+  margin: 1em auto;
+}
+
+input[type='submit'] {
+  width: 10em;
+  border-radius: 1em;
+}
+
+h4 {
+  background-color: rgb(173, 216, 230);
+  padding: .3em;
 }

@@ -13,8 +13,7 @@ var calculateNodePositions = function(networkNum) {
   var networkNodeList = [2].concat($('#hiddenLayers'+networkNum).val().split(',').map(Number),[0]);
 
 
-  // If no input was provided default to a single hidden layer of 10 nodes
-  // networkNodeList[1] = networkNodeList[1] === 0 ? 5 : networkNodeList[1];
+  // If no input was provided default values
   if (networkNodeList[1] === 0) {
     switch (networkNum) {
       case 1: networkNodeList.splice(1,1,3); break;

@@ -14,13 +14,6 @@ socket.on('connect', function() {
   console.log('connection!');
 });
 
-// For neural nets pushed to client, update visualization weights and results
-socket.on('brain', function(result) {
-  // Update paths between nodes when new weights are provided
-  var weights = flattenBrainWeights(result.brain);
-  update(result, weights);
-});
-
 // On form submission visualize and train neural networks
 $(document).ready(function() {
   $('form').submit(function(e) {
@@ -66,4 +59,11 @@ $(document).ready(function() {
 
   });
 
+});
+
+// For neural nets pushed to client, update visualization weights and results
+socket.on('brain', function(result) {
+  // Update paths between nodes when new weights are provided
+  var weights = flattenBrainWeights(result.brain);
+  update(result, weights);
 });

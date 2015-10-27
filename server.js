@@ -16,7 +16,7 @@ var io = require('socket.io')(http);
 // Entry point for server
 var path = require('path');
 var bodyParser = require('body-parser');
-var port = 8000;
+var port = 8888;
 
 http.listen(port, function(){
   console.log('listening on *:'+port);

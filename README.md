@@ -6,6 +6,7 @@ Watch the evolution of your neural nets as they are being trained!
 2. `npm install`
 3. `npm start`
 4. Visit localhost:8888
+5. Train some brains!
 
 ## GIF
 ![screenshot](https://cloud.githubusercontent.com/assets/7910250/10273277/c149dbe4-6ae2-11e5-9fcf-eac0e805aff6.gif)

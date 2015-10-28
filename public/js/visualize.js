@@ -1,9 +1,13 @@
-/* 
+/*
 * @Author: Katrina Uychaco
 * @Date:   2015-07-22 19:57:55
 * @Last Modified by:   Katrina Uychaco
 * @Last Modified time: 2015-07-24 21:56:18
 */
+
+// D3 functions
+// -------------
+// Visualize net and update weights
 
 'use strict';
 
@@ -19,7 +23,7 @@ for (var i=0; i<4; i++){
   var svg = d3.select('body').append('svg')
       .attr('width', width)
       .attr('height', height)
-    
+
   svg.append('g');
   svg.append('text').attr('x', 40).attr('y', height-70).attr('class', 'netNum')
     .text('Net Number '+(i+1)).style('font-weight', 'bold');
@@ -49,7 +53,7 @@ var visualize = function(networkNum, nodePositions, linksSource) {
 
   // Create new nodes
   var nodeEnter = nodes.data(nodePositions).enter();
-  
+
   nodeEnter.append('circle')
     .attr('class', 'node')
     .attr('cx', function(d) { return d.x; })
@@ -71,7 +75,7 @@ var visualize = function(networkNum, nodePositions, linksSource) {
 var update = function(result, weights) {
   var netNum = result.networkNum;
 
-  // Update weights
+  // Update weights and opacity of links
   var maxWeight = Math.max.apply(null, weights);
   var minWeight = Math.min.apply(null, weights);
   var max = Math.max(Math.abs(maxWeight), Math.abs(minWeight));

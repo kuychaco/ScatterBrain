@@ -2,7 +2,7 @@
 Watch the evolution of your neural nets as they are being trained!
 
 ## Instructions
-1. Clone repo.
+1. Clone repo
 2. `npm install`
 3. `npm start`
 4. Visit localhost:8000
@@ -23,11 +23,11 @@ net.train([{input: [0, 0], output: [0]},
 var output = net.run([1, 0]);  // [0.987]
 ```
 
-## Interesting Aspects
-- Modified **brain.js** source code
-  - callback to train method receives [serialized net object](https://github.com/kuychaco/ScatterBrain/blob/3546355ffbae9158fd1b767c745186355f40b551/node_modules/brain/lib/neuralnetwork.js#L114-L116)
-- Parallelization on both ends of the stack (2 versions)
-  - server: **node child processes**
-  - client: **web workers**
+## Interesting Features and Aspects
+- Visualized using **D3.js** (modify link opacity based on weight ratios)
 - Real-time updates from server using websockets (**socket.io**)
-- Visualize using **D3.js** (modify link opacity based on weight ratios)
+- Modified **brain.js** source code
+  - callback to `net.train` method receives [serialized net object](https://github.com/kuychaco/ScatterBrain/blob/3546355ffbae9158fd1b767c745186355f40b551/node_modules/brain/lib/neuralnetwork.js#L114-L116)
+- Parallelization on both ends of the stack (2 versions of app)
+  - server: **node child processes** ([repo](https://github.com/kuychaco/ScatterBrain/tree/parallelNode))
+  - client: **web workers** ([repo](https://github.com/kuychaco/ScatterBrain/tree/gh-pages))

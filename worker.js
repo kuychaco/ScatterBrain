@@ -5,11 +5,13 @@
 * @Last Modified time: 2015-07-24 21:20:52
 */
 
+// Train neural net
+// -------------
+// Worker code for training net inside node child process
+
 'use strict';
 
 var brain = require('brain');
-
-// Worker code for training neural net
 
 // Process data when passed in
 process.on('message', function(data) {
@@ -18,6 +20,7 @@ process.on('message', function(data) {
     hiddenLayers: data.hiddenLayers
   });
 
+  // Approximate the XOR function
   var trainingData = [
     {input: [0, 0], output: [0]},
     {input: [0, 1], output: [1]},
@@ -27,7 +30,7 @@ process.on('message', function(data) {
 
   var options = {
     callback: function(result) {
-      var output = net.run([1, 0]);  // [0.987]
+      var output = net.run([1, 0]);
       result.output = output;
       process.send(result);
     },

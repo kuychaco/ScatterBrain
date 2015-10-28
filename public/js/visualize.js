@@ -5,6 +5,10 @@
 * @Last Modified time: 2015-07-24 21:56:18
 */
 
+// D3 functions
+// -------------
+// Visualize net and update weights
+
 'use strict';
 
 var width = 960/4,
@@ -71,8 +75,7 @@ var visualize = function(networkNum, nodePositions, linksSource) {
 var update = function(result, weights) {
   var netNum = result.networkNum;
 
-  // Update weights
-  //############ Update opacity of links ############
+  // Update weights and opacity of links
   var maxWeight = Math.max.apply(null, weights);
   var minWeight = Math.min.apply(null, weights);
   var max = Math.max(Math.abs(maxWeight), Math.abs(minWeight));

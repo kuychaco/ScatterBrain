@@ -5,6 +5,11 @@
 * @Last Modified time: 2015-07-24 21:58:12
 */
 
+// Visualize and train nets
+// -------------
+// On form submission visualize nets and emit "train" event
+// On "brain" event, update D3 graph
+
 'use strict';
 
 // EventEmitter-like object

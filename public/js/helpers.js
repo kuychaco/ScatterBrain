@@ -1,3 +1,15 @@
+/*
+* @Author: Katrina Uychaco
+* @Date:   2015-07-21 16:54:34
+* @Last Modified by:   Katrina Uychaco
+* @Last Modified time: 2015-07-24 21:58:12
+*/
+
+// Helper functions
+// -------------
+// Helper functions for visualizing neural net
+
+
 // Options to control display of networks
 var displayOptions = {
   width: 960,
@@ -11,7 +23,6 @@ var calculateNodePositions = function(networkNum) {
   // Parse the values in the input forms to get the array of nodes for each network
   // Add elements for nodes in input layer and output layer
   var networkNodeList = [2].concat($('#hiddenLayers'+networkNum).val().split(',').map(Number),[0]);
-
 
   // If no input was provided default values
   if (networkNodeList[1] === 0) {
@@ -38,7 +49,6 @@ var calculateNodePositions = function(networkNum) {
     networkXCoordinates.push(xCoordinate);
   });
 
-
   // Calculate the y-coordinates for each layer in network 1
   var networkYCoordinates = [];
 
@@ -57,7 +67,6 @@ var calculateNodePositions = function(networkNum) {
     networkYCoordinates.push(layerYCoordinates);
   });
 
-
   // Create a 2D array of coordinates for each node in the network
   return generateNodeCoordinates(networkXCoordinates, networkYCoordinates);
 
@@ -68,7 +77,7 @@ var calculateNodePositions = function(networkNum) {
 var generateNodeCoordinates = function(xCoordinates, yCoordinates) {
   return yCoordinates.map(function(layer, layerNum) {
     return layer.map(function(yLoc, index) {
-      var bias = index===0 && layerNum !== yCoordinates.length-1 ? true : false;
+      var bias = index === 0 && layerNum !== yCoordinates.length-1 ? true : false;
       return { x: xCoordinates[layerNum], y: yLoc, bias: bias };
     });
   });
@@ -76,12 +85,17 @@ var generateNodeCoordinates = function(xCoordinates, yCoordinates) {
 
 // Given node positions, generate link objects with source and target nodes
 var generateLinkObjects = function(nodePositions) {
+  // Reduce over each layer of nodes
   return nodePositions.reduce(function(result, layer, index) {
-    // Since we are refering to nodes in the next layer of the network we want to stop
-    // at one layer before the output layer
-    if (index < (nodePositions.length - 1)) {
+    // Do not create links if at last layer since there are no "target" nodes
+    if (index >= (nodePositions.length - 1)) {
+      return result;
+    } else {
+      // For each layer, reduce over "source" nodes
       return result.concat(layer.reduce(function(sourceResult, sourceNode) {
+        // For each "source" node, reduce over "target" nodes and create link object
         return sourceResult.concat(nodePositions[index+1].reduce(function(targetResult, targetNode, targetIndex) {
+          // If bias node, do not create link object
           if (index < nodePositions.length-2 && targetIndex === 0) {
             return targetResult;
           }
@@ -90,30 +104,46 @@ var generateLinkObjects = function(nodePositions) {
         }, []));
 
       }, []));
-    } else {
-      return result;
     }
   }, []);
 };
 
 // Parse brain object into flat array format for d3 data binding
 var flattenBrainWeights = function(brain) {
+  /*
+  sample brain format: {
+    "layers":[
+      {
+        "0":{},
+        "1":{}
+      },
+      {
+        "0":{"bias":-0.13775140175904993,"weights":{"0":-0.14431629102543386,"1":-0.11291045756723624}},
+        "1":{"bias":-0.15061635486253902,"weights":{"0":0.11841434426722121,"1":-0.15699895373038442}},
+        "2":{"bias":-0.06333254072206175,"weights":{"0":-0.028592914319789497,"1":0.022337994708619264}}
+      },
+      {
+        "0":{"bias":-0.11511309213954993,"weights":{"0":0.018125649244839215,"1":0.012948306778833192,"2":-0.017456778295649164}}
+      }
+    ],
+    "outputLookup":false,
+    "inputLookup":false
+  }
+  */
 
   var weights = [];
 
-  // Layers are objects with numeric projerty names
-  // iterate through source layers
+  // Iterate through source layers
   for (var sourceLayerNum=0; sourceLayerNum<brain.layers.length-1; sourceLayerNum++) {
 
     var sourceLayer = brain.layers[sourceLayerNum];
     var targetLayer = brain.layers[sourceLayerNum+1];
-    // for all source nodes add weights for each target node
+    // For all source nodes add weights for each target node
     for (var sourceNodeNum=-1; sourceNodeNum<Object.keys(sourceLayer).length; sourceNodeNum++) {
 
-      var sourceNode = sourceLayer[sourceNodeNum];
       for (var targetNodeNum=0; targetNodeNum<Object.keys(targetLayer).length; targetNodeNum++) {
         var targetNode = targetLayer[targetNodeNum];
-        // first add bias node weights
+        // Add bias node weights
         if (sourceNodeNum === -1) {
           weights.push(targetNode.bias);
         } else {

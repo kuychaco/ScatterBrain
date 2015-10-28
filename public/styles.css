@@ -12,7 +12,9 @@
   stroke-width: 3px;
 }
 
-.node text { font: 12px sans-serif; }
+.node text {
+  font: 12px sans-serif;
+}
 
 .link {
   fill: none;
@@ -27,18 +29,11 @@ th {
 body {
   padding-left: 20px;
   font-family: 'Lato', sans-serif;
-}
-
-h4 {
-  font-style: italic;
+  text-align: center;
 }
 
 p {
   padding-bottom: 10px;
-}
-
-body {
-  text-align: center;
 }
 
 input {
@@ -46,16 +41,17 @@ input {
   border: none;
 }
 
-table {
-  margin: 1em auto;
-}
-
 input[type='submit'] {
   width: 10em;
   border-radius: 1em;
 }
 
+table {
+  margin: 1em auto;
+}
+
 h4 {
+  font-style: italic;
   background-color: rgb(173, 216, 230);
   padding: .3em;
 }
